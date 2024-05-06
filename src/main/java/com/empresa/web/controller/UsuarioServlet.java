@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import com.empresa.web.dao.UsuarioDao;
+import com.empresa.web.dao.UsuarioDaoFactory;
+import com.empresa.web.dao.UsuarioDaoMySQL;
+import com.empresa.web.dao.UsuarioDaoPostgreSQL;
 import com.empresa.web.modelo.Usuario;
 
 @WebServlet("/")
@@ -30,8 +33,9 @@ public class UsuarioServlet extends HttpServlet {
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
-	public void init(ServletConfig config) throws ServletException {
-		this.usuarioDao = new UsuarioDao();
+	public void init() throws ServletException {
+		String motor = getServletContext().getInitParameter("motor");
+		this.usuarioDao = UsuarioDaoFactory.getUsuarioDao(motor);
 	}
 
 	/**
@@ -140,7 +144,7 @@ public class UsuarioServlet extends HttpServlet {
 	private void listUsuarios(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
 		
-		List<Usuario> listUsuarios = usuarioDao.selectALL();
+		List<Usuario> listUsuarios = usuarioDao.selectAll();
 		
 		request.setAttribute("listUsuarios", listUsuarios);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("usuariolist.jsp");
