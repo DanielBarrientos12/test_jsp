@@ -128,7 +128,7 @@ public class UsuarioServlet extends HttpServlet {
 			
 		usuarioDao.update(usuario);
 		
-		response.sendRedirect("/list");
+		response.sendRedirect("list");
 	}
 
 	private void eliminarUsuario(HttpServletRequest request, HttpServletResponse response)
@@ -137,7 +137,7 @@ public class UsuarioServlet extends HttpServlet {
 			
 			usuarioDao.delete(id);
 			
-			response.sendRedirect("/list");
+			response.sendRedirect("list");
 		
 	}
 	
